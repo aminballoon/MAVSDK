@@ -71,12 +71,6 @@ public:
     void start_video_async(const Camera::ResultCallback& callback);
     void stop_video_async(const Camera::ResultCallback& callback);
 
-    void prepare_async(const Camera::ResultCallback& callback);
-    void take_photo_async(const Camera::ResultCallback& callback);
-    void start_photo_interval_async(float interval_s, const Camera::ResultCallback& callback);
-    void stop_photo_interval_async(const Camera::ResultCallback& callback);
-    void start_video_async(const Camera::ResultCallback& callback);
-    void stop_video_async(const Camera::ResultCallback& callback);
 
     Camera::Information information() const;
     Camera::InformationHandle subscribe_information(const Camera::InformationCallback& callback);
