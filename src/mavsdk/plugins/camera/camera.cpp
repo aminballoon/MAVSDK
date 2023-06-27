@@ -254,6 +254,124 @@ Camera::Result Camera::select_camera(int32_t camera_id) const
     return _impl->select_camera(camera_id);
 }
 
+void Camera::camera_zoom_wide_async(const ResultCallback callback)
+{
+    _impl->camera_zoom_wide_async(callback);
+}
+
+Camera::Result Camera::camera_zoom_wide() const
+{
+    return _impl->camera_zoom_wide();
+}
+
+void Camera::camera_zoom_tele_async(const ResultCallback callback)
+{
+    _impl->camera_zoom_tele_async(callback);
+}
+
+Camera::Result Camera::camera_zoom_tele() const
+{
+    return _impl->camera_zoom_tele();
+}
+
+void Camera::camera_zoom_stop_async(const ResultCallback callback)
+{
+    _impl->camera_zoom_stop_async(callback);
+}
+
+Camera::Result Camera::camera_zoom_stop() const
+{
+    return _impl->camera_zoom_stop();
+}
+
+void Camera::camera_zoom_range_async(float range, const ResultCallback callback)
+{
+    _impl->camera_zoom_range_async(range, callback);
+}
+
+Camera::Result Camera::camera_zoom_range(float range) const
+{
+    return _impl->camera_zoom_range(range);
+}
+
+void Camera::camera_track_point_async(
+    float pointx, float pointy, float radius, const ResultCallback callback)
+{
+    _impl->camera_track_point_async(pointx, pointy, radius, callback);
+}
+
+Camera::Result Camera::camera_track_point(float pointx, float pointy, float radius) const
+{
+    return _impl->camera_track_point(pointx, pointy, radius);
+}
+
+void Camera::camera_track_rectangle_async(
+    float top_left_x,
+    float top_left_y,
+    float bottom_right_x,
+    float bottom_right_y,
+    const ResultCallback callback)
+{
+    _impl->camera_track_rectangle_async(
+        top_left_x, top_left_y, bottom_right_x, bottom_right_y, callback);
+}
+
+Camera::Result Camera::camera_track_rectangle(
+    float top_left_x, float top_left_y, float bottom_right_x, float bottom_right_y) const
+{
+    return _impl->camera_track_rectangle(top_left_x, top_left_y, bottom_right_x, bottom_right_y);
+}
+
+void Camera::camera_track_stop_async(const ResultCallback callback)
+{
+    _impl->camera_track_stop_async(callback);
+}
+
+Camera::Result Camera::camera_track_stop() const
+{
+    return _impl->camera_track_stop();
+}
+
+void Camera::camera_focus_up_async(const ResultCallback callback)
+{
+    _impl->camera_focus_up_async(callback);
+}
+
+Camera::Result Camera::camera_focus_up() const
+{
+    return _impl->camera_focus_up();
+}
+
+void Camera::camera_focus_down_async(const ResultCallback callback)
+{
+    _impl->camera_focus_down_async(callback);
+}
+
+Camera::Result Camera::camera_focus_down() const
+{
+    return _impl->camera_focus_down();
+}
+
+void Camera::camera_focus_stop_async(const ResultCallback callback)
+{
+    _impl->camera_focus_stop_async(callback);
+}
+
+Camera::Result Camera::camera_focus_stop() const
+{
+    return _impl->camera_focus_stop();
+}
+
+void Camera::camera_focus_range_async(float range, const ResultCallback callback)
+{
+    _impl->camera_focus_range_async(range, callback);
+}
+
+Camera::Result Camera::camera_focus_range(float range) const
+{
+    return _impl->camera_focus_range(range);
+}
+
 std::ostream& operator<<(std::ostream& str, Camera::Result const& result)
 {
     switch (result) {

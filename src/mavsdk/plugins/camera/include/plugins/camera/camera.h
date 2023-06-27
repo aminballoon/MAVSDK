@@ -900,6 +900,190 @@ public:
     Result select_camera(int32_t camera_id) const;
 
     /**
+     * @brief Zoomin Camera.
+     *
+     * This function is non-blocking. See 'camera_zoom_wide' for the blocking counterpart.
+     */
+    void camera_zoom_wide_async(const ResultCallback callback);
+
+    /**
+     * @brief Zoomin Camera.
+     *
+     * This function is blocking. See 'camera_zoom_wide_async' for the non-blocking counterpart.
+     *
+     * @return Result of request.
+     */
+    Result camera_zoom_wide() const;
+
+    /**
+     * @brief Zoomout Camera.
+     *
+     * This function is non-blocking. See 'camera_zoom_tele' for the blocking counterpart.
+     */
+    void camera_zoom_tele_async(const ResultCallback callback);
+
+    /**
+     * @brief Zoomout Camera.
+     *
+     * This function is blocking. See 'camera_zoom_tele_async' for the non-blocking counterpart.
+     *
+     * @return Result of request.
+     */
+    Result camera_zoom_tele() const;
+
+    /**
+     * @brief Stop Zoom Camera.
+     *
+     * This function is non-blocking. See 'camera_zoom_stop' for the blocking counterpart.
+     */
+    void camera_zoom_stop_async(const ResultCallback callback);
+
+    /**
+     * @brief Stop Zoom Camera.
+     *
+     * This function is blocking. See 'camera_zoom_stop_async' for the non-blocking counterpart.
+     *
+     * @return Result of request.
+     */
+    Result camera_zoom_stop() const;
+
+    /**
+     * @brief Zoom Camera with range value.
+     *
+     * This function is non-blocking. See 'camera_zoom_range' for the blocking counterpart.
+     */
+    void camera_zoom_range_async(float range, const ResultCallback callback);
+
+    /**
+     * @brief Zoom Camera with range value.
+     *
+     * This function is blocking. See 'camera_zoom_range_async' for the non-blocking counterpart.
+     *
+     * @return Result of request.
+     */
+    Result camera_zoom_range(float range) const;
+
+    /**
+     * @brief Camera Point Tracking.
+     *
+     * This function is non-blocking. See 'camera_track_point' for the blocking counterpart.
+     */
+    void camera_track_point_async(
+        float pointx, float pointy, float radius, const ResultCallback callback);
+
+    /**
+     * @brief Camera Point Tracking.
+     *
+     * This function is blocking. See 'camera_track_point_async' for the non-blocking counterpart.
+     *
+     * @return Result of request.
+     */
+    Result camera_track_point(float pointx, float pointy, float radius) const;
+
+    /**
+     * @brief Camera Rectangle Tracking.
+     *
+     * This function is non-blocking. See 'camera_track_rectangle' for the blocking counterpart.
+     */
+    void camera_track_rectangle_async(
+        float top_left_x,
+        float top_left_y,
+        float bottom_right_x,
+        float bottom_right_y,
+        const ResultCallback callback);
+
+    /**
+     * @brief Camera Rectangle Tracking.
+     *
+     * This function is blocking. See 'camera_track_rectangle_async' for the non-blocking
+     * counterpart.
+     *
+     * @return Result of request.
+     */
+    Result camera_track_rectangle(
+        float top_left_x, float top_left_y, float bottom_right_x, float bottom_right_y) const;
+
+    /**
+     * @brief Stop Camera Tracking.
+     *
+     * This function is non-blocking. See 'camera_track_stop' for the blocking counterpart.
+     */
+    void camera_track_stop_async(const ResultCallback callback);
+
+    /**
+     * @brief Stop Camera Tracking.
+     *
+     * This function is blocking. See 'camera_track_stop_async' for the non-blocking counterpart.
+     *
+     * @return Result of request.
+     */
+    Result camera_track_stop() const;
+
+    /**
+     * @brief Focus Up Camera.
+     *
+     * This function is non-blocking. See 'camera_focus_up' for the blocking counterpart.
+     */
+    void camera_focus_up_async(const ResultCallback callback);
+
+    /**
+     * @brief Focus Up Camera.
+     *
+     * This function is blocking. See 'camera_focus_up_async' for the non-blocking counterpart.
+     *
+     * @return Result of request.
+     */
+    Result camera_focus_up() const;
+
+    /**
+     * @brief Focus Down Camera.
+     *
+     * This function is non-blocking. See 'camera_focus_down' for the blocking counterpart.
+     */
+    void camera_focus_down_async(const ResultCallback callback);
+
+    /**
+     * @brief Focus Down Camera.
+     *
+     * This function is blocking. See 'camera_focus_down_async' for the non-blocking counterpart.
+     *
+     * @return Result of request.
+     */
+    Result camera_focus_down() const;
+
+    /**
+     * @brief Stop Camera Focus.
+     *
+     * This function is non-blocking. See 'camera_focus_stop' for the blocking counterpart.
+     */
+    void camera_focus_stop_async(const ResultCallback callback);
+
+    /**
+     * @brief Stop Camera Focus.
+     *
+     * This function is blocking. See 'camera_focus_stop_async' for the non-blocking counterpart.
+     *
+     * @return Result of request.
+     */
+    Result camera_focus_stop() const;
+
+    /**
+     * @brief Focus Camera with range value.
+     *
+     * This function is non-blocking. See 'camera_focus_range' for the blocking counterpart.
+     */
+    void camera_focus_range_async(float range, const ResultCallback callback);
+
+    /**
+     * @brief Focus Camera with range value.
+     *
+     * This function is blocking. See 'camera_focus_range_async' for the non-blocking counterpart.
+     *
+     * @return Result of request.
+     */
+    Result camera_focus_range(float range) const;
+
+    /**
      * @brief Copy constructor.
      */
     Camera(const Camera& other);
