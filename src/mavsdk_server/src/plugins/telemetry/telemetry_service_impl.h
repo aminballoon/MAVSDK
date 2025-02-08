@@ -1310,6 +1310,54 @@ public:
         return obj;
     }
 
+    static std::unique_ptr<rpc::telemetry::WindCov>
+    translateToRpcWindCov(const mavsdk::Telemetry::WindCov& wind_cov)
+    {
+        auto rpc_obj = std::make_unique<rpc::telemetry::WindCov>();
+
+        rpc_obj->set_wind_x_ned_m_s(wind_cov.wind_x_ned_m_s);
+
+        rpc_obj->set_wind_y_ned_m_s(wind_cov.wind_y_ned_m_s);
+
+        rpc_obj->set_wind_z_ned_m_s(wind_cov.wind_z_ned_m_s);
+
+        rpc_obj->set_var_horiz(wind_cov.var_horiz);
+
+        rpc_obj->set_var_vert(wind_cov.var_vert);
+
+        rpc_obj->set_wind_alt(wind_cov.wind_alt);
+
+        rpc_obj->set_horiz_accuracy(wind_cov.horiz_accuracy);
+
+        rpc_obj->set_vert_accuracy(wind_cov.vert_accuracy);
+
+        return rpc_obj;
+    }
+
+    static mavsdk::Telemetry::WindCov
+    translateFromRpcWindCov(const rpc::telemetry::WindCov& wind_cov)
+    {
+        mavsdk::Telemetry::WindCov obj;
+
+        obj.wind_x_ned_m_s = wind_cov.wind_x_ned_m_s();
+
+        obj.wind_y_ned_m_s = wind_cov.wind_y_ned_m_s();
+
+        obj.wind_z_ned_m_s = wind_cov.wind_z_ned_m_s();
+
+        obj.var_horiz = wind_cov.var_horiz();
+
+        obj.var_vert = wind_cov.var_vert();
+
+        obj.wind_alt = wind_cov.wind_alt();
+
+        obj.horiz_accuracy = wind_cov.horiz_accuracy();
+
+        obj.vert_accuracy = wind_cov.vert_accuracy();
+
+        return obj;
+    }
+
     static rpc::telemetry::TelemetryResult::Result
     translateToRpcResult(const mavsdk::Telemetry::Result& result)
     {
@@ -2672,6 +2720,47 @@ public:
                     std::unique_lock<std::mutex> lock(*subscribe_mutex);
                     if (!*is_finished && !writer->Write(rpc_response)) {
                         _lazy_plugin.maybe_plugin()->unsubscribe_altitude(handle);
+
+                        *is_finished = true;
+                        unregister_stream_stop_promise(stream_closed_promise);
+                        stream_closed_promise->set_value();
+                    }
+                });
+
+        stream_closed_future.wait();
+        std::unique_lock<std::mutex> lock(*subscribe_mutex);
+        *is_finished = true;
+
+        return grpc::Status::OK;
+    }
+
+    grpc::Status SubscribeWindCov(
+        grpc::ServerContext* /* context */,
+        const mavsdk::rpc::telemetry::SubscribeWindCovRequest* /* request */,
+        grpc::ServerWriter<rpc::telemetry::WindCovResponse>* writer) override
+    {
+        if (_lazy_plugin.maybe_plugin() == nullptr) {
+            return grpc::Status::OK;
+        }
+
+        auto stream_closed_promise = std::make_shared<std::promise<void>>();
+        auto stream_closed_future = stream_closed_promise->get_future();
+        register_stream_stop_promise(stream_closed_promise);
+
+        auto is_finished = std::make_shared<bool>(false);
+        auto subscribe_mutex = std::make_shared<std::mutex>();
+
+        const mavsdk::Telemetry::WindCovHandle handle =
+            _lazy_plugin.maybe_plugin()->subscribe_wind_cov(
+                [this, &writer, &stream_closed_promise, is_finished, subscribe_mutex, &handle](
+                    const mavsdk::Telemetry::WindCov wind_cov) {
+                    rpc::telemetry::WindCovResponse rpc_response;
+
+                    rpc_response.set_allocated_wind_cov(translateToRpcWindCov(wind_cov).release());
+
+                    std::unique_lock<std::mutex> lock(*subscribe_mutex);
+                    if (!*is_finished && !writer->Write(rpc_response)) {
+                        _lazy_plugin.maybe_plugin()->unsubscribe_wind_cov(handle);
 
                         *is_finished = true;
                         unregister_stream_stop_promise(stream_closed_promise);

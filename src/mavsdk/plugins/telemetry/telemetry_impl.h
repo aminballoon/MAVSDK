@@ -111,6 +111,7 @@ public:
     uint64_t unix_epoch_time() const;
     Telemetry::Heading heading() const;
     Telemetry::Altitude altitude() const;
+    Telemetry::WindCov wind_cov() const;
 
     Telemetry::PositionVelocityNedHandle
     subscribe_position_velocity_ned(const Telemetry::PositionVelocityNedCallback& callback);
@@ -193,6 +194,8 @@ public:
     void unsubscribe_heading(Telemetry::HeadingHandle handle);
     Telemetry::AltitudeHandle subscribe_altitude(const Telemetry::AltitudeCallback& callback);
     void unsubscribe_altitude(Telemetry::AltitudeHandle handle);
+    Telemetry::WindCovHandle subscribe_wind_cov(const Telemetry::WindCovCallback& callback);
+    void unsubscribe_wind_cov(Telemetry::WindCovHandle handle);
 
     TelemetryImpl(const TelemetryImpl&) = delete;
     TelemetryImpl& operator=(const TelemetryImpl&) = delete;
@@ -234,6 +237,7 @@ private:
     void set_scaled_pressure(Telemetry::ScaledPressure& scaled_pressure);
     void set_heading(Telemetry::Heading heading);
     void set_altitude(Telemetry::Altitude altitude);
+    void set_wind_cov(Telemetry::WindCov wind_cov);
 
     void process_position_velocity_ned(const mavlink_message_t& message);
     void process_global_position_int(const mavlink_message_t& message);
@@ -258,6 +262,7 @@ private:
     void process_distance_sensor(const mavlink_message_t& message);
     void process_scaled_pressure(const mavlink_message_t& message);
     void process_altitude(const mavlink_message_t& message);
+    void process_wind_cov(const mavlink_message_t& message);
 
     void receive_statustext(const MavlinkStatustextHandler::Statustext&);
 
@@ -368,6 +373,9 @@ private:
     mutable std::mutex _altitude_mutex{};
     Telemetry::Altitude _altitude{};
 
+    mutable std::mutex _wind_cov_mutex{};
+    Telemetry::WindCov _wind_cov{};
+
     std::mutex _subscription_mutex{};
     CallbackList<Telemetry::PositionVelocityNed> _position_velocity_ned_subscriptions{};
     CallbackList<Telemetry::Position> _position_subscriptions{};
@@ -401,6 +409,7 @@ private:
     CallbackList<Telemetry::ScaledPressure> _scaled_pressure_subscriptions{};
     CallbackList<Telemetry::Heading> _heading_subscriptions{};
     CallbackList<Telemetry::Altitude> _altitude_subscriptions{};
+    CallbackList<Telemetry::WindCov> _wind_cov_subscriptions{};
 
     // The velocity (former ground speed) and position are coupled to the same message, therefore,
     // we just use the faster between the two.

@@ -996,6 +996,36 @@ public:
     friend std::ostream& operator<<(std::ostream& str, Telemetry::Altitude const& altitude);
 
     /**
+     * @brief WindCov message type
+     */
+    struct WindCov {
+        float wind_x_ned_m_s{float(NAN)}; /**< @brief Wind in North (NED) direction */
+        float wind_y_ned_m_s{float(NAN)}; /**< @brief  Wind in East (NED) direction */
+        float wind_z_ned_m_s{float(NAN)}; /**< @brief Wind in down (NED) direction */
+        float var_horiz{float(NAN)}; /**< @brief Variability of wind in XY, 1-STD estimated from a 1
+                                        Hz lowpassed wind estimate */
+        float var_vert{float(NAN)}; /**< @brief Variability of wind in Z, 1-STD estimated from a 1
+                                       Hz lowpassed wind estimate */
+        float wind_alt{float(NAN)}; /**< @brief Altitude (MSL) that this measurement was taken at */
+        float horiz_accuracy{float(NAN)}; /**< @brief Horizontal speed 1-STD accuracy */
+        float vert_accuracy{float(NAN)}; /**< @brief Vertical speed 1-STD accuracy */
+    };
+
+    /**
+     * @brief Equal operator to compare two `Telemetry::WindCov` objects.
+     *
+     * @return `true` if items are equal.
+     */
+    friend bool operator==(const Telemetry::WindCov& lhs, const Telemetry::WindCov& rhs);
+
+    /**
+     * @brief Stream operator to print information about a `Telemetry::WindCov`.
+     *
+     * @return A reference to the stream.
+     */
+    friend std::ostream& operator<<(std::ostream& str, Telemetry::WindCov const& wind_cov);
+
+    /**
      * @brief Possible results returned for telemetry requests.
      */
     enum class Result {
@@ -1889,6 +1919,33 @@ public:
      * @return One Altitude update.
      */
     Altitude altitude() const;
+
+    /**
+     * @brief Callback type for subscribe_wind_cov.
+     */
+    using WindCovCallback = std::function<void(WindCov)>;
+
+    /**
+     * @brief Handle type for subscribe_wind_cov.
+     */
+    using WindCovHandle = Handle<WindCov>;
+
+    /**
+     * @brief Subscribe to 'Wind Estimated' updates.
+     */
+    WindCovHandle subscribe_wind_cov(const WindCovCallback& callback);
+
+    /**
+     * @brief Unsubscribe from subscribe_wind_cov
+     */
+    void unsubscribe_wind_cov(WindCovHandle handle);
+
+    /**
+     * @brief Poll for 'WindCov' (blocking).
+     *
+     * @return One WindCov update.
+     */
+    WindCov wind_cov() const;
 
     /**
      * @brief Set rate to 'position' updates.

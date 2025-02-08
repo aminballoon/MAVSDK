@@ -39,6 +39,7 @@ using MagneticFieldFrd = Telemetry::MagneticFieldFrd;
 using Imu = Telemetry::Imu;
 using GpsGlobalOrigin = Telemetry::GpsGlobalOrigin;
 using Altitude = Telemetry::Altitude;
+using WindCov = Telemetry::WindCov;
 
 Telemetry::Telemetry(System& system) : PluginBase(), _impl{std::make_unique<TelemetryImpl>(system)}
 {}
@@ -538,6 +539,21 @@ void Telemetry::unsubscribe_altitude(AltitudeHandle handle)
 Telemetry::Altitude Telemetry::altitude() const
 {
     return _impl->altitude();
+}
+
+Telemetry::WindCovHandle Telemetry::subscribe_wind_cov(const WindCovCallback& callback)
+{
+    return _impl->subscribe_wind_cov(callback);
+}
+
+void Telemetry::unsubscribe_wind_cov(WindCovHandle handle)
+{
+    _impl->unsubscribe_wind_cov(handle);
+}
+
+Telemetry::WindCov Telemetry::wind_cov() const
+{
+    return _impl->wind_cov();
 }
 
 void Telemetry::set_rate_position_async(double rate_hz, const ResultCallback callback)
@@ -1470,6 +1486,42 @@ std::ostream& operator<<(std::ostream& str, Telemetry::Altitude const& altitude)
     str << "    altitude_relative_m: " << altitude.altitude_relative_m << '\n';
     str << "    altitude_terrain_m: " << altitude.altitude_terrain_m << '\n';
     str << "    bottom_clearance_m: " << altitude.bottom_clearance_m << '\n';
+    str << '}';
+    return str;
+}
+
+bool operator==(const Telemetry::WindCov& lhs, const Telemetry::WindCov& rhs)
+{
+    return ((std::isnan(rhs.wind_x_ned_m_s) && std::isnan(lhs.wind_x_ned_m_s)) ||
+            rhs.wind_x_ned_m_s == lhs.wind_x_ned_m_s) &&
+           ((std::isnan(rhs.wind_y_ned_m_s) && std::isnan(lhs.wind_y_ned_m_s)) ||
+            rhs.wind_y_ned_m_s == lhs.wind_y_ned_m_s) &&
+           ((std::isnan(rhs.wind_z_ned_m_s) && std::isnan(lhs.wind_z_ned_m_s)) ||
+            rhs.wind_z_ned_m_s == lhs.wind_z_ned_m_s) &&
+           ((std::isnan(rhs.var_horiz) && std::isnan(lhs.var_horiz)) ||
+            rhs.var_horiz == lhs.var_horiz) &&
+           ((std::isnan(rhs.var_vert) && std::isnan(lhs.var_vert)) ||
+            rhs.var_vert == lhs.var_vert) &&
+           ((std::isnan(rhs.wind_alt) && std::isnan(lhs.wind_alt)) ||
+            rhs.wind_alt == lhs.wind_alt) &&
+           ((std::isnan(rhs.horiz_accuracy) && std::isnan(lhs.horiz_accuracy)) ||
+            rhs.horiz_accuracy == lhs.horiz_accuracy) &&
+           ((std::isnan(rhs.vert_accuracy) && std::isnan(lhs.vert_accuracy)) ||
+            rhs.vert_accuracy == lhs.vert_accuracy);
+}
+
+std::ostream& operator<<(std::ostream& str, Telemetry::WindCov const& wind_cov)
+{
+    str << std::setprecision(15);
+    str << "wind_cov:" << '\n' << "{\n";
+    str << "    wind_x_ned_m_s: " << wind_cov.wind_x_ned_m_s << '\n';
+    str << "    wind_y_ned_m_s: " << wind_cov.wind_y_ned_m_s << '\n';
+    str << "    wind_z_ned_m_s: " << wind_cov.wind_z_ned_m_s << '\n';
+    str << "    var_horiz: " << wind_cov.var_horiz << '\n';
+    str << "    var_vert: " << wind_cov.var_vert << '\n';
+    str << "    wind_alt: " << wind_cov.wind_alt << '\n';
+    str << "    horiz_accuracy: " << wind_cov.horiz_accuracy << '\n';
+    str << "    vert_accuracy: " << wind_cov.vert_accuracy << '\n';
     str << '}';
     return str;
 }
