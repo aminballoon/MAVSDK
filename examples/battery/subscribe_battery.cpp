@@ -66,7 +66,8 @@ int main(int argc, char** argv)
                   << "Battery Capacity Consumed: " << battery.capacity_consumed_ah << " ah\n"
                   << "Battery Remaining Percent: " << battery.remaining_percent << " %\n"
                   << "Battery Remaining Time: " << battery.time_remaining_s << " s\n"
-                  << "Battery Function: " << battery.battery_function << "\n" << std::endl;
+                  << "Battery Function: " << battery.battery_function << "\n"
+                  << std::endl;
     };
 
     // Subscribe to battery updates
