@@ -28,6 +28,38 @@ namespace mavsdk {
 namespace rpc {
 namespace telemetry {
 
+inline constexpr Wind::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : wind_x_ned_m_s_{0},
+        wind_y_ned_m_s_{0},
+        wind_z_ned_m_s_{0},
+        horizontal_variability_stddev_m_s_{0},
+        vertical_variability_stddev_m_s_{0},
+        wind_altitude_msl_m_{0},
+        horizontal_wind_speed_accuracy_m_s_{0},
+        vertical_wind_speed_accuracy_m_s_{0},
+        _cached_size_{0} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR Wind::Wind(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct WindDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR WindDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~WindDefaultTypeInternal() {}
+  union {
+    Wind _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 WindDefaultTypeInternal _Wind_default_instance_;
+
 inline constexpr VtolStateResponse::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : vtol_state_{static_cast< ::mavsdk::rpc::telemetry::VtolState >(0)},
@@ -5067,6 +5099,96 @@ static const ::_pbi::MigrationSchema
         {541, 550, -1, sizeof(::mavsdk::rpc::telemetry::HeadingResponse)},
         {551, -1, -1, sizeof(::mavsdk::rpc::telemetry::SubscribeAltitudeRequest)},
         {559, 568, -1, sizeof(::mavsdk::rpc::telemetry::AltitudeResponse)},
+<<<<<<< HEAD
+<<<<<<< HEAD
+        {569, -1, -1, sizeof(::mavsdk::rpc::telemetry::SubscribeWindRequest)},
+        {577, 586, -1, sizeof(::mavsdk::rpc::telemetry::WindResponse)},
+        {587, -1, -1, sizeof(::mavsdk::rpc::telemetry::SetRatePositionRequest)},
+        {596, 605, -1, sizeof(::mavsdk::rpc::telemetry::SetRatePositionResponse)},
+        {606, -1, -1, sizeof(::mavsdk::rpc::telemetry::SetRateHomeRequest)},
+        {615, 624, -1, sizeof(::mavsdk::rpc::telemetry::SetRateHomeResponse)},
+        {625, -1, -1, sizeof(::mavsdk::rpc::telemetry::SetRateInAirRequest)},
+        {634, 643, -1, sizeof(::mavsdk::rpc::telemetry::SetRateInAirResponse)},
+        {644, -1, -1, sizeof(::mavsdk::rpc::telemetry::SetRateLandedStateRequest)},
+        {653, 662, -1, sizeof(::mavsdk::rpc::telemetry::SetRateLandedStateResponse)},
+        {663, -1, -1, sizeof(::mavsdk::rpc::telemetry::SetRateVtolStateRequest)},
+        {672, 681, -1, sizeof(::mavsdk::rpc::telemetry::SetRateVtolStateResponse)},
+        {682, -1, -1, sizeof(::mavsdk::rpc::telemetry::SetRateAttitudeEulerRequest)},
+        {691, 700, -1, sizeof(::mavsdk::rpc::telemetry::SetRateAttitudeEulerResponse)},
+        {701, -1, -1, sizeof(::mavsdk::rpc::telemetry::SetRateAttitudeQuaternionRequest)},
+        {710, 719, -1, sizeof(::mavsdk::rpc::telemetry::SetRateAttitudeQuaternionResponse)},
+        {720, -1, -1, sizeof(::mavsdk::rpc::telemetry::SetRateAttitudeAngularVelocityBodyRequest)},
+        {729, 738, -1, sizeof(::mavsdk::rpc::telemetry::SetRateAttitudeAngularVelocityBodyResponse)},
+        {739, -1, -1, sizeof(::mavsdk::rpc::telemetry::SetRateVelocityNedRequest)},
+        {748, 757, -1, sizeof(::mavsdk::rpc::telemetry::SetRateVelocityNedResponse)},
+        {758, -1, -1, sizeof(::mavsdk::rpc::telemetry::SetRateGpsInfoRequest)},
+        {767, 776, -1, sizeof(::mavsdk::rpc::telemetry::SetRateGpsInfoResponse)},
+        {777, -1, -1, sizeof(::mavsdk::rpc::telemetry::SetRateRawGpsRequest)},
+        {786, -1, -1, sizeof(::mavsdk::rpc::telemetry::SetRateBatteryRequest)},
+        {795, 804, -1, sizeof(::mavsdk::rpc::telemetry::SetRateBatteryResponse)},
+        {805, -1, -1, sizeof(::mavsdk::rpc::telemetry::SetRateRcStatusRequest)},
+        {814, 823, -1, sizeof(::mavsdk::rpc::telemetry::SetRateRcStatusResponse)},
+        {824, -1, -1, sizeof(::mavsdk::rpc::telemetry::SetRateActuatorControlTargetRequest)},
+        {833, 842, -1, sizeof(::mavsdk::rpc::telemetry::SetRateActuatorControlTargetResponse)},
+        {843, -1, -1, sizeof(::mavsdk::rpc::telemetry::SetRateActuatorOutputStatusRequest)},
+        {852, 861, -1, sizeof(::mavsdk::rpc::telemetry::SetRateActuatorOutputStatusResponse)},
+        {862, -1, -1, sizeof(::mavsdk::rpc::telemetry::SetRateOdometryRequest)},
+        {871, 880, -1, sizeof(::mavsdk::rpc::telemetry::SetRateOdometryResponse)},
+        {881, -1, -1, sizeof(::mavsdk::rpc::telemetry::SetRatePositionVelocityNedRequest)},
+        {890, 899, -1, sizeof(::mavsdk::rpc::telemetry::SetRatePositionVelocityNedResponse)},
+        {900, -1, -1, sizeof(::mavsdk::rpc::telemetry::SetRateGroundTruthRequest)},
+        {909, 918, -1, sizeof(::mavsdk::rpc::telemetry::SetRateGroundTruthResponse)},
+        {919, -1, -1, sizeof(::mavsdk::rpc::telemetry::SetRateFixedwingMetricsRequest)},
+        {928, 937, -1, sizeof(::mavsdk::rpc::telemetry::SetRateFixedwingMetricsResponse)},
+        {938, -1, -1, sizeof(::mavsdk::rpc::telemetry::SetRateImuRequest)},
+        {947, 956, -1, sizeof(::mavsdk::rpc::telemetry::SetRateImuResponse)},
+        {957, -1, -1, sizeof(::mavsdk::rpc::telemetry::SetRateScaledImuRequest)},
+        {966, 975, -1, sizeof(::mavsdk::rpc::telemetry::SetRateScaledImuResponse)},
+        {976, -1, -1, sizeof(::mavsdk::rpc::telemetry::SetRateRawImuRequest)},
+        {985, 994, -1, sizeof(::mavsdk::rpc::telemetry::SetRateRawImuResponse)},
+        {995, -1, -1, sizeof(::mavsdk::rpc::telemetry::SetRateUnixEpochTimeRequest)},
+        {1004, 1013, -1, sizeof(::mavsdk::rpc::telemetry::SetRateUnixEpochTimeResponse)},
+        {1014, -1, -1, sizeof(::mavsdk::rpc::telemetry::SetRateDistanceSensorRequest)},
+        {1023, 1032, -1, sizeof(::mavsdk::rpc::telemetry::SetRateDistanceSensorResponse)},
+        {1033, -1, -1, sizeof(::mavsdk::rpc::telemetry::GetGpsGlobalOriginRequest)},
+        {1041, 1051, -1, sizeof(::mavsdk::rpc::telemetry::GetGpsGlobalOriginResponse)},
+        {1053, -1, -1, sizeof(::mavsdk::rpc::telemetry::SetRateAltitudeRequest)},
+        {1062, 1071, -1, sizeof(::mavsdk::rpc::telemetry::SetRateAltitudeResponse)},
+        {1072, -1, -1, sizeof(::mavsdk::rpc::telemetry::Position)},
+        {1084, -1, -1, sizeof(::mavsdk::rpc::telemetry::Heading)},
+        {1093, -1, -1, sizeof(::mavsdk::rpc::telemetry::Quaternion)},
+        {1106, -1, -1, sizeof(::mavsdk::rpc::telemetry::EulerAngle)},
+        {1118, -1, -1, sizeof(::mavsdk::rpc::telemetry::AngularVelocityBody)},
+        {1129, -1, -1, sizeof(::mavsdk::rpc::telemetry::GpsInfo)},
+        {1139, -1, -1, sizeof(::mavsdk::rpc::telemetry::RawGps)},
+        {1161, -1, -1, sizeof(::mavsdk::rpc::telemetry::Battery)},
+        {1175, -1, -1, sizeof(::mavsdk::rpc::telemetry::Health)},
+        {1190, -1, -1, sizeof(::mavsdk::rpc::telemetry::RcStatus)},
+        {1201, -1, -1, sizeof(::mavsdk::rpc::telemetry::StatusText)},
+        {1211, -1, -1, sizeof(::mavsdk::rpc::telemetry::ActuatorControlTarget)},
+        {1221, -1, -1, sizeof(::mavsdk::rpc::telemetry::ActuatorOutputStatus)},
+        {1231, -1, -1, sizeof(::mavsdk::rpc::telemetry::Covariance)},
+        {1240, -1, -1, sizeof(::mavsdk::rpc::telemetry::VelocityBody)},
+        {1251, -1, -1, sizeof(::mavsdk::rpc::telemetry::PositionBody)},
+        {1262, 1279, -1, sizeof(::mavsdk::rpc::telemetry::Odometry)},
+        {1288, 1300, -1, sizeof(::mavsdk::rpc::telemetry::DistanceSensor)},
+        {1304, -1, -1, sizeof(::mavsdk::rpc::telemetry::ScaledPressure)},
+        {1317, -1, -1, sizeof(::mavsdk::rpc::telemetry::PositionNed)},
+        {1328, -1, -1, sizeof(::mavsdk::rpc::telemetry::VelocityNed)},
+        {1339, 1349, -1, sizeof(::mavsdk::rpc::telemetry::PositionVelocityNed)},
+        {1351, -1, -1, sizeof(::mavsdk::rpc::telemetry::GroundTruth)},
+        {1362, -1, -1, sizeof(::mavsdk::rpc::telemetry::FixedwingMetrics)},
+        {1376, -1, -1, sizeof(::mavsdk::rpc::telemetry::AccelerationFrd)},
+        {1387, -1, -1, sizeof(::mavsdk::rpc::telemetry::AngularVelocityFrd)},
+        {1398, -1, -1, sizeof(::mavsdk::rpc::telemetry::MagneticFieldFrd)},
+        {1409, 1422, -1, sizeof(::mavsdk::rpc::telemetry::Imu)},
+        {1427, -1, -1, sizeof(::mavsdk::rpc::telemetry::GpsGlobalOrigin)},
+        {1438, -1, -1, sizeof(::mavsdk::rpc::telemetry::Altitude)},
+        {1452, -1, -1, sizeof(::mavsdk::rpc::telemetry::Wind)},
+        {1468, -1, -1, sizeof(::mavsdk::rpc::telemetry::TelemetryResult)},
+=======
+=======
+>>>>>>> 392914a2 (Merge main)
         {569, -1, -1, sizeof(::mavsdk::rpc::telemetry::SetRatePositionRequest)},
         {578, 587, -1, sizeof(::mavsdk::rpc::telemetry::SetRatePositionResponse)},
         {588, -1, -1, sizeof(::mavsdk::rpc::telemetry::SetRateHomeRequest)},
@@ -5149,6 +5271,7 @@ static const ::_pbi::MigrationSchema
         {1411, -1, -1, sizeof(::mavsdk::rpc::telemetry::GpsGlobalOrigin)},
         {1422, -1, -1, sizeof(::mavsdk::rpc::telemetry::Altitude)},
         {1436, -1, -1, sizeof(::mavsdk::rpc::telemetry::TelemetryResult)},
+>>>>>>> de660690 (Add feature Battery time reaming and Battery function)
 };
 static const ::_pb::Message* const file_default_instances[] = {
     &::mavsdk::rpc::telemetry::_SubscribePositionRequest_default_instance_._instance,
@@ -5815,7 +5938,11 @@ static ::absl::once_flag descriptor_table_telemetry_2ftelemetry_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_telemetry_2ftelemetry_2eproto = {
     false,
     false,
+<<<<<<< HEAD
+    20469,
+=======
     20204,
+>>>>>>> de660690 (Add feature Battery time reaming and Battery function)
     descriptor_table_protodef_telemetry_2ftelemetry_2eproto,
     "telemetry/telemetry.proto",
     &descriptor_table_telemetry_2ftelemetry_2eproto_once,
