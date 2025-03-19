@@ -1036,10 +1036,7 @@ void TelemetryImpl::process_sys_status(const mavlink_message_t& message)
             sys_status.onboard_control_sensors_health & MAV_SYS_STATUS_SENSOR_3D_GYRO);
     }
 
-    // PX4 v1.15.3 and previous has the bug that it doesn't set 3D_ACCEL present.
-    // Therefore, we ignore that and look at the health flag only.
-    if (sys_status.onboard_control_sensors_present & MAV_SYS_STATUS_SENSOR_3D_ACCEL ||
-        _system_impl->autopilot() == Autopilot::Px4) {
+    if (sys_status.onboard_control_sensors_present & MAV_SYS_STATUS_SENSOR_3D_ACCEL) {
         set_health_accelerometer_calibration(
             sys_status.onboard_control_sensors_health & MAV_SYS_STATUS_SENSOR_3D_ACCEL);
     }
@@ -2507,18 +2504,6 @@ void TelemetryImpl::unsubscribe_altitude(Telemetry::AltitudeHandle handle)
 {
     std::lock_guard<std::mutex> lock(_subscription_mutex);
     _altitude_subscriptions.unsubscribe(handle);
-}
-
-Telemetry::WindHandle TelemetryImpl::subscribe_wind(const Telemetry::WindCallback& callback)
-{
-    std::lock_guard<std::mutex> lock(_subscription_mutex);
-    return _wind_subscriptions.subscribe(callback);
-}
-
-void TelemetryImpl::unsubscribe_wind(Telemetry::WindHandle handle)
-{
-    std::lock_guard<std::mutex> lock(_subscription_mutex);
-    _wind_subscriptions.unsubscribe(handle);
 }
 
 void TelemetryImpl::get_gps_global_origin_async(
